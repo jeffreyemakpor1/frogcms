@@ -1,0 +1,16 @@
+{
+    "name": "badass121/html",
+    "license": "mit",
+    "authors": [
+        {
+            "name": "Emakpor Jeffrey",
+            "email": "jeffreyefemena4@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "classmap": [
+            "./backend"
+        ]
+    }
+}
