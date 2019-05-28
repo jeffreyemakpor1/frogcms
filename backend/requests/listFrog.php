@@ -7,6 +7,11 @@ if( $_SERVER['REQUEST_METHOD'] === 'POST'){
             if(isset($_POST['listApp'])
                 ){
 
+                    if ($_POST[ 'listApp'] === '') {
+                        echo json_encode(["response" => "error"]);
+                        exit;
+                    }
+
                     $listApp = $_POST['listApp'];
 
                     header('Content-Type: application/json');

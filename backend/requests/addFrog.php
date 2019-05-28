@@ -11,6 +11,15 @@ if( $_SERVER['REQUEST_METHOD'] === 'POST'){
                 isset($_POST['frogColor'])&&
                 isset($_POST['frogDescription']) 
                 ){
+                    if ($_POST['frogLabel'] === '' &&
+                        $_POST[ 'frogWeight'] === '' &&
+                        $_POST[ 'frogColor'] === '' &&
+                        $_POST[ 'frogDescription'] === '' 
+                    ) {
+                        echo json_encode(["response" => "error"]);
+                        exit;
+                    }
+
 
                     $frogLabel = $_POST['frogLabel'];
                     $frogWeight = $_POST['frogWeight'];

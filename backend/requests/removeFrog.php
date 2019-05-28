@@ -6,6 +6,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST[ 'froglabel'])) {
 
+        if($_POST['froglabel'] === ''){
+            echo json_encode(["response" => "error"]);
+            exit;            
+        }
+
         $froglabel = $_POST[ 'froglabel'];
 
         header('Content-Type: application/json');
