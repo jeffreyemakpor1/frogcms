@@ -84,10 +84,13 @@ class Authentication implements doAuth
     public function removeFrog($label): bool
     {   
         $label =  $this->santize($label);
-        $query = mysqli_query($this->conn, "DELETE from frogmart where frog_label = { $label} ");
+        $query = mysqli_query($this->conn, "DELETE from frogmart where frog_label =  '$label' ") or die(mysqli_error($this->conn));
         
-        if($query)
-            return true;
+        if($query){
+            if( mysqli_affected_rows($this->conn) > 0){
+                return true;
+            }
+        }
 
         return false;
     }

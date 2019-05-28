@@ -31,9 +31,15 @@
 
 
         //remove frog from database
-        removeFrog : function () {
-            var data = JSON.stringify(data);
-            this.ajax(this.url.REMOVE_FROG).then(res => {
+        removeFrog : function (data) {
+            this.ajax(this.url.REMOVE_FROG , data).then(res => {
+                console.log(res);
+                
+                if(res.response === "success")
+                    alert("Deleted " + data.froglabel)
+                
+                if(res.response === "error")
+                    alert("cannot not delete frog")
 
             }).catch(err => console.warn(err))
         },
@@ -60,8 +66,6 @@
                             i++;
                     }
                 }
-
-                console.log(res);
                 
             }).catch(err => console.warn(err))
         },
@@ -86,21 +90,24 @@
             ADD_FROG:"/backend/requests/addFrog.php",
             LIST_FROG:"/backend/requests/listFrog.php",
             UPDATE_FROG:"",
-            REMOVE_FROG:"",
+            REMOVE_FROG:"/backend/requests/removeFrog.php",
         }
         
     };
 
 
-    FrogaMart.listFrog();
 
+    FrogaMart.listFrog(); //list frog on dashbord
+    
     (typeof (addFrog) !== 'undefined') ? addFrog.onclick = function () {
 
-        let froglabel = frogLabel.value;
-        let frogweight = frogWeight.value;
-        let frogcolor = frogColor.value;
-        let frogdescription = frogDescription.value;
-        
+
+
+        var froglabel = frogLabel.value;
+        var frogweight = frogWeight.value;
+        var frogcolor = frogColor.value;
+        var frogdescription = frogDescription.value;
+
 
         let data = new FormData;
             data.append("frogLabel", froglabel);
@@ -120,7 +127,10 @@
     }:null;
 
     (typeof (removeFrog) !== 'undefined') ? removeFrog.onclick = function () {
-        FrogaMart.removeFrog(data);
+        let formdata = new FormData;
+        formdata.append("froglabel", frogLabel.value);
+
+        FrogaMart.removeFrog(formdata);
         event.preventDefault();
     }:null;
 
