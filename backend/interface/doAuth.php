@@ -1,7 +1,7 @@
 <?php
 
     interface doAuth{
-        public function addFrog( array $data) : string;
+        public function addFrog( array $data) : bool;
         public function removeFrog( $label) : bool;
         public function updateFrog(array $data): bool;
         public function listFrog() : array;

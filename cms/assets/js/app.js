@@ -9,6 +9,11 @@
             this.ajax(this.url.ADD_FROG ,  data).then(res=>{
                 if (res.response === "success"){
                     alert("New Frog Added");
+                    return true;
+                }
+                if(res.response === "error"){
+                    alert("Error adding a frog");
+                    return false;
                 }
             }).catch(err => console.warn(err))
         },
@@ -37,8 +42,27 @@
 
         //list frogs in database
         listFrog: function () {
-            this.ajax(this.url.LIST_FROG).then(res => {
+            let formdata = new FormData;
+            formdata.append("listApp", "true");
+            
+            this.ajax(this.url.LIST_FROG, formdata).then(res => {
 
+
+                if(res.response === "error")
+                    return false;
+
+                let i = 1;
+                    let tb = document.getElementById('tbody');
+                    for (const key in res.response) {
+                        if (res.response.hasOwnProperty(key)) {
+                            const el = res.response[key];
+                            tb.insertAdjacentHTML('beforeend', "<tr><th>" + i + "</th> <td>" + el['frog_label'] + "</td><td>" + el['frog_weight'] + "</td><td>" + el['frog_color'] + "</td><td>" + el['frog_description'] + "</td></tr>");
+                            i++;
+                    }
+                }
+
+                console.log(res);
+                
             }).catch(err => console.warn(err))
         },
 
@@ -60,12 +84,15 @@
         //our url delcaration
         url:{
             ADD_FROG:"/backend/requests/addFrog.php",
-            LIST_FROG:"",
+            LIST_FROG:"/backend/requests/listFrog.php",
             UPDATE_FROG:"",
             REMOVE_FROG:"",
         }
         
     };
+
+
+    FrogaMart.listFrog();
 
     (typeof (addFrog) !== 'undefined') ? addFrog.onclick = function () {
 

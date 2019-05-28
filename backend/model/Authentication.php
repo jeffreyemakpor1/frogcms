@@ -32,23 +32,22 @@ class Authentication implements doAuth
     }
 
     public function listFrog(): array{
-
+        $data = [];
         $query = mysqli_query(
             $this->conn,
             "SELECT * from frogmart");
-
 
         if(!$query)
         return false;
         
         while ($get = mysqli_fetch_assoc($query)) {
-            return $get;
+            array_push($data, $get);
         }
         
-        return[];
+        return $data;
     }
 
-    public function addFrog(array $data): string
+    public function addFrog(array $data): bool
     {
         $label = $this->santize( $data[0]);
         $weight = $this->santize( $data[1]);
