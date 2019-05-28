@@ -6,10 +6,10 @@
 
         //add frog details
         addFrog : function (data) {
-            var data = JSON.stringify(data);
-            this.ajax(this.url.ADD_FROG).then(res=>{
-                console.log(res);
-                
+            this.ajax(this.url.ADD_FROG ,  data).then(res=>{
+                if (res.response === "success"){
+                    alert("New Frog Added");
+                }
             }).catch(err => console.warn(err))
         },
 
@@ -46,10 +46,9 @@
         //custom ajax function
         ajax: function(url , data){
             return new Promise((resolve, reject) => {
-                fetch(url,
-                        {
-                            method: 'POST',
-                            data:data
+                fetch(url,{
+                            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                            body: data
                         }
                     ).then(res =>{
                         return res.json().then(res => resolve(res))
@@ -60,23 +59,43 @@
 
         //our url delcaration
         url:{
-            ADD_FROG:"/backend/",
+            ADD_FROG:"/backend/requests/addFrog.php",
             LIST_FROG:"",
             UPDATE_FROG:"",
             REMOVE_FROG:"",
         }
         
-    }
+    };
 
-    addFrog.onclick = function () {
+    (typeof (addFrog) !== 'undefined') ? addFrog.onclick = function () {
+
+        let froglabel = frogLabel.value;
+        let frogweight = frogWeight.value;
+        let frogcolor = frogColor.value;
+        let frogdescription = frogDescription.value;
+        
+
+        let data = new FormData;
+            data.append("frogLabel", froglabel);
+            data.append("frogWeight" ,  frogweight)
+            data.append("frogColor", frogcolor);
+            data.append("frogDescription" , frogdescription);
+        
         FrogaMart.addFrog(data);
-    }
-    updateFrog.onclick = function () {
+
+        event.preventDefault();
+    }:null;
+
+
+    (typeof (updateFrog) !== 'undefined')? updateFrog.onclick = function () {
         FrogaMart.updateFrog(data);
-    }
-    removeFrog.onclick = function () {
+        event.preventDefault();
+    }:null;
+
+    (typeof (removeFrog) !== 'undefined') ? removeFrog.onclick = function () {
         FrogaMart.removeFrog(data);
-    }
+        event.preventDefault();
+    }:null;
 
 
 }))();
